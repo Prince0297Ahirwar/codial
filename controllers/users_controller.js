@@ -1,5 +1,6 @@
-const user = require('../models/user');
+const User = require('../models/user');
 
+//render signup page
 module.exports.profile = function(req,res){
     return res.render('users_profile',
     {
@@ -8,21 +9,55 @@ module.exports.profile = function(req,res){
     
     );
 }
-
+//render signin page
 module.exports.signUp = function(req,res){
-    user.create({
-        email:req.body.email,
-        password:req.body.password,
-        name:req.body.name
-    },function(err,newUser){
-            if(err){
-                console.log("error in creating user",err);
-                return;
-            }
-            console.log("New user created is:",newUser);
-            window.alert('Account create successfully sign in')
-            return res.redirect('back');
-        }
-    );
+    return res.render('user_sign_up',{
+        title:"codial|sign up"
+    })
 }
 
+
+module.exports.signIn = function(req,res){
+    return res.render("user_sign_in",{
+        title:"codial|sign in"
+    });
+};
+
+//create user action get signup data
+
+module.exports.create = function(req,res){
+    //to do
+    //checking password
+    if(req.body.password != req.body.confirm_password){
+        return res.redirect('back');
+    }
+
+    //checking if user already exist
+
+    User.findOne({email:req.body.email},
+            function(err,user){
+                if(err){console.log("error in finding user for signup");return;}
+                if(!user){
+                    User.create(req.body,function(err,user){
+                        if(err){
+                            console.log("error in creating user");
+                            return;
+                        }
+                        return res.redirect('/users/sign-in');
+
+                    });
+                }
+                else{
+                    res.redirect('back');
+                }
+
+            }
+        );
+}
+
+//creatin session
+
+module.exports.createSession = function(req,res){
+    //to do
+
+}
