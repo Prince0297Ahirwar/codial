@@ -21,6 +21,10 @@ app.use(expressLayout);
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
+
+//creating middleware for html form parsing
+app.use(express.urlencoded());
+
 //using routes for routing
 app.use('/',require('./routes'));
 
