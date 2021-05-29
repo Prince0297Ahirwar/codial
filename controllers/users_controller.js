@@ -1,3 +1,4 @@
+const { response } = require('express');
 const User = require('../models/user');
 
 //render signup page
@@ -58,6 +59,7 @@ module.exports.create = function(req,res){
 //creatin session
 
 module.exports.createSession = function(req,res){
-    //to do
+    console.log("heere");
+    return res.redirect('/');
 
 }

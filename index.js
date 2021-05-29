@@ -11,6 +11,12 @@ const expressLayout = require('express-ejs-layouts');
 
 const db = require('./config/mongoose');
 
+//used for session cookies
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+
+
 //seting up static files and cookie parser
 app.use(cookieParser()); 
 
@@ -27,13 +33,30 @@ app.set('layout extractScripts',true);
 //creating middleware for html form parsing
 app.use(express.urlencoded());
 
-//using routes for routing
-app.use('/',require('./routes'));
 
 //setting view engine
 app.set("view engine",'ejs');
 app.set("views",'./views');
 
+//order using middleware is important because we need urlencoded so that req is parsed befor using session cookies
+
+app.use(session({
+    name:'codial',
+    //change secret to deploy in production mode
+    secret:'itsasecret',
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge:(1000*60*100)
+    }
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//using routes for routing
+app.use('/',require('./routes'));
 
 app.listen(port,function(err){
     if(err){
