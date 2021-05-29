@@ -12,6 +12,10 @@ module.exports.profile = function(req,res){
 }
 //render signin page
 module.exports.signUp = function(req,res){
+
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up',{
         title:"codial|sign up"
     })
@@ -19,6 +23,9 @@ module.exports.signUp = function(req,res){
 
 
 module.exports.signIn = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render("user_sign_in",{
         title:"codial|sign in"
     });
@@ -59,7 +66,12 @@ module.exports.create = function(req,res){
 //creatin session
 
 module.exports.createSession = function(req,res){
-    console.log("heere");
     return res.redirect('/');
 
+}
+
+module.exports.destroySession = function(req,res){
+    //req.logout function is provided by passport
+    req.logout();
+    return res.redirect('/');
 }
