@@ -7,6 +7,8 @@ router.get('/',homeController.home);
 
 router.use('/users',require('./users'));
 
+router.use('/posts',require('./posts'));
+
 
 //for any other further routes 
 //router.use('/routername',require('./router'));
