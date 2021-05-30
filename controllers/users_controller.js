@@ -3,11 +3,11 @@ const User = require('../models/user');
 
 //render signup page
 module.exports.profile = function(req,res){
+    
     return res.render('users_profile',
     {
         title:"users profile"
     }
-    
     );
 }
 //render signin page

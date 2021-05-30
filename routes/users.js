@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const usersController = require('../controllers/users_controller');
 
-
+//here passportmiddle ware is checking if user is loged in or not before accessing profile
 router.get('/profile',passport.checkAuthentication,usersController.profile);
 
 router.get('/sign-up',usersController.signUp);
