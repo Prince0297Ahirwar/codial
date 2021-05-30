@@ -9,7 +9,7 @@ router.use('/users',require('./users'));
 
 router.use('/posts',require('./posts'));
 
-
+router.use('/comments',require('./comments'));
 //for any other further routes 
 //router.use('/routername',require('./router'));
 module.exports = router;
