@@ -3,13 +3,30 @@ const User = require('../models/user');
 
 //render signup page
 module.exports.profile = function(req,res){
-    
-    return res.render('users_profile',
-    {
-        title:"users profile"
-    }
-    );
+    User.findById(req.params.id,function(err,user){
+
+        return res.render('users_profile',
+        {
+            title:"users profile",
+            profile_user:user
+        }
+        );
+    });
+
 }
+
+module.exports.update = function(req,res){
+    console.log(req.user.id,req.params.id);
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send('unauthorized');
+    }
+}
+
 //render signin page
 module.exports.signUp = function(req,res){
 

@@ -2,6 +2,7 @@
 
 const { populate } = require('../models/post');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 module.exports.home = function(req,res){
     // console.log(req.cookies);
@@ -28,10 +29,14 @@ module.exports.home = function(req,res){
     .exec(
         function(err,posts){
             if(err){console.log("error in retrieving posts",err); return}
-            return res.render('home',{
-                title:"CODIAL| HOME",
-                posts:posts
+            User.find({},function(err,users){
+                return res.render('home',{
+                    title:"CODIAL| HOME",
+                    posts:posts,
+                    all_users:users
+                });
             });
+            
             
         }
     );
