@@ -1,0 +1,13 @@
+#home-container{
+    display:flex;
+    #feed-post{
+        width: 60%;
+        padding:10px;
+        background-color: rgb(219, 207, 207);
+    }
+    #user-friends{
+        width:40%;
+        padding:10px;
+        background-color: rgb(243, 200, 222);
+    }
+}
