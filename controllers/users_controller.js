@@ -16,10 +16,13 @@ module.exports.profile = function(req,res){
 }
 
 module.exports.update = function(req,res){
-    console.log(req.user.id,req.params.id);
+    
     if(req.user.id == req.params.id){
         User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-
+            if(err){
+                req.flash('error',err);return res.redirect('back');
+            }
+            req.flash('success','Profile updated successfully');
             return res.redirect('back');
         });
     }else{
@@ -61,19 +64,20 @@ module.exports.create = function(req,res){
 
     User.findOne({email:req.body.email},
             function(err,user){
-                if(err){console.log("error in finding user for signup");return;}
+                if(err){req.flash('error',err);return res.redirect('back');}
                 if(!user){
                     User.create(req.body,function(err,user){
                         if(err){
-                            console.log("error in creating user");
-                            return;
+                            req.flash('error',err);return res.redirect('back');
                         }
+                        req.flash('success','User created Successfully');
                         return res.redirect('/users/sign-in');
 
                     });
                 }
                 else{
-                    res.redirect('back');
+                    req.flash('error',"User already exist");
+                    return res.redirect('back');
                 }
 
             }

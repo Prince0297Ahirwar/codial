@@ -9,7 +9,8 @@ const User = require('../models/user');
 module.exports.home = async function(req,res){
 
     try{
-        let posts = await Post.find({}) //first this will run and store successful result in posts
+        let posts = await Post.find({})
+        .sort(-createdAt)                                                 //first this will run and store successful result in posts
         .populate('user')
         .populate({
             path:'comments',
