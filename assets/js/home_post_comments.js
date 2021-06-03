@@ -18,6 +18,7 @@ class PostComments{
         // call for all the existing comments
        // console.log(this.postContainer);
             $(' .delete-comment-button', this.postContainer).each(function(){
+                
                 self.deleteComment($(this));
             });
     }

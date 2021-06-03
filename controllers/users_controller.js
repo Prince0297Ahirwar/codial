@@ -15,17 +15,36 @@ module.exports.profile = function(req,res){
 
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+    //         if(err){
+    //             req.flash('error',err);return res.redirect('back');
+    //         }
+    //         req.flash('success','Profile updated successfully'); 
+    //         return res.redirect('back');
+    //     });
+    // }else{
+    //     return res.status(401).send('unauthorized');
+    // }
+
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            if(err){
-                req.flash('error',err);return res.redirect('back');
-            }
-            req.flash('success','Profile updated successfully');
+        try{
+            let user = await User.findById(req.params.id);
+
+            User.uploadedAvatar(req,res,function(err){
+                if(err){console.log("@@@##**multer error",err);}
+                console.log(req.file);
+            });
+        }
+        catch(err){
+            req.flash('error',err);
             return res.redirect('back');
-        });
-    }else{
+        }
+    }
+    else{
+        req.flash('error','uunauthorized');
         return res.status(401).send('unauthorized');
     }
 }
