@@ -10,7 +10,7 @@ module.exports.home = async function(req,res){
 
     try{
         let posts = await Post.find({})
-        .sort(-createdAt)                                                 //first this will run and store successful result in posts
+        .sort('-createdAt')                                                 //first this will run and store successful result in posts
         .populate('user')
         .populate({
             path:'comments',
@@ -28,7 +28,7 @@ module.exports.home = async function(req,res){
             all_users:users
         });
     }
-    catch{
+    catch(err){
         console.log('Error',err);
     }
 
