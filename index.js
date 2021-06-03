@@ -28,6 +28,9 @@ app.use(cookieParser());
 
 app.use(express.static('./assets'))
 
+app.use('/uploads',express.static(__dirname+'/uploads')); //now this path is codial/uploads etc used for showing profile avatar
+//above code make upload path available to browser
+
 //need to use layout before rendering any page it tells that rendered views belongs to this layouts
 app.use(expressLayout);
 
