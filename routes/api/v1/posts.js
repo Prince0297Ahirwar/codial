@@ -3,8 +3,11 @@ const router  = express.Router();
 
 const postApi = require('../../../controllers/api/v1/posts_api');
 
+const passport = require('passport');
+
 router.get('/',postApi.index);
 
-router.delete('/:id',postApi.destroy);
+router.delete('/:id',passport.authenticate('jwt',{session:false}),postApi.destroy);
+//session is false because we dont want session cookie to be generated
 
 module.exports = router
